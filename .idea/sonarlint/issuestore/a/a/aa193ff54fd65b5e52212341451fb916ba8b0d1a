@@ -1,0 +1,44 @@
+
+	java:S112Â"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ş×±î¡2J$c290058c-75ec-4c15-817c-61a718e0609d
+	java:S112ë"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ş×±î¡2J$6d0a8272-e2cc-4b4d-b0cb-64d369ab0a0e
+	java:S112–"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÿ×±î¡2J$4c45143d-10b7-49ce-8cd5-23c32b8cae4f
+r
+java:S3740 "/Provide the parametrized type for this generic.(´°æ¸8ÿ×±î¡2J$ec1dd0aa-c153-4fee-982c-c065667e7181
+w
+java:S3740#"/Provide the parametrized type for this generic.(¾±ƒ‡úÿÿÿÿ8ÿ×±î¡2J$8309cd79-4e09-4948-aa69-78e23a75b666
+w
+java:S3740&"/Provide the parametrized type for this generic.(ºšãÿıÿÿÿÿ8ÿ×±î¡2J$4fb139e0-3c1e-4c50-810b-89f985489101
+r
+java:S3740)"/Provide the parametrized type for this generic.(Œà•®8ÿ×±î¡2J$e04ee8bc-164b-4b8a-8f9d-c7619f6010c2
+r
+java:S3740,"/Provide the parametrized type for this generic.(¨¥8ÿ×±î¡2J$8e1a282c-429c-4915-a1bd-ae9e7302f451
+q
+java:S3740/"/Provide the parametrized type for this generic.(ş™ÚZ8ÿ×±î¡2J$1d8babab-5467-44cf-af27-cf63c2dc2965
+w
+java:S37402"/Provide the parametrized type for this generic.(ù‚©·üÿÿÿÿ8ÿ×±î¡2J$0e823bae-9aea-4636-8368-cf59178b4a5c
+r
+java:S37405"/Provide the parametrized type for this generic.(Úİîô8ÿ×±î¡2J$70244232-7889-4a35-9bee-422eed77ceee
+“	java:S117}"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨Ş—Á8Ø±î¡2J$84e65bdb-5e2d-47d5-b5b1-9e127e524a0a
+™	java:S117š"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ÑÑ·ûÿÿÿÿ8Ø±î¡2J$efd5ca5c-52e8-40ea-a1ca-92446443f722
+™	java:S117®"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÏÛçÎøÿÿÿÿ8Ø±î¡2J$c87d4f43-606d-4b21-94e0-71b95623a8ad
+”	java:S117Õ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÃÍ’8Ø±î¡2J$839c20f8-c836-466a-8199-fe5da78d1d06
+™	java:S117ÿ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆç‘±úÿÿÿÿ8Ø±î¡2J$afdf9d34-7376-40d2-a3eb-98d6e611478b
+q
+java:S5411"(Use a primitive boolean expression here.(éÕ™Èùÿÿÿÿ8‚Ø±î¡2J$5dae383c-1f34-4031-adb4-01434a6f31cd
+q
+java:S5411ä"(Use a primitive boolean expression here.(ò…¢½üÿÿÿÿ8ƒØ±î¡2J$53c990f8-e5aa-44ed-8b48-91935e9fe130
+Š
+java:S2095"GUse try-with-resources or close this "Statement" in a "finally" clause.(˜­a8ªØ±î¡2J$a14e28ad-038a-4be1-8917-5ceff7f3ac40
+“
+java:S2095²"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÒÄã÷8ªØ±î¡2J$555b558d-6d7d-4920-a92e-4f45b6aa5461
+“
+java:S2095"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÒÄã÷8ªØ±î¡2J$08c32ffb-d357-465a-8e84-326f865bc19e
+’
+java:S2095Ø"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(›øH8ªØ±î¡2J$aa367a09-bb68-4ce4-a06c-60f644341878
+‹
+java:S2095"GUse try-with-resources or close this "Statement" in a "finally" clause.(ö¥ÓÜ8ªØ±î¡2J$070edf5e-bf80-42f5-aa53-30717341224a
+Ê
+java:S1186¨"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ú¨óøÿÿÿÿ8«Ø±î¡2J$679f57cd-0f8f-4d20-a175-601510c80d27
+n	java:S106”"+Replace this use of System.out by a logger.(ê¾ú®8³Ø±î¡2J$76eb51dd-85d6-419e-a5c8-038d4de51cce
+x
+java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èıÿÿÿÿ8½Ø±î¡2J$94547a91-8921-421b-8782-8355e887cdb3
