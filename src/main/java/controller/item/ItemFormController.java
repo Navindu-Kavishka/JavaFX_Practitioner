@@ -85,17 +85,11 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        try {
-            String SQL = "DELETE FROM item WHERE ItemCode=?";
-            boolean isDeleted = CrudUtil.execute(SQL,txtItemCode.getText());
-            if (isDeleted){
-                new Alert(Alert.AlertType.INFORMATION,""+txtItemCode.getText()+": Item Deleted !!").show();
-                loadTable();
-            }
-
-        } catch (SQLException e) {
+        if (itemController.deleteItem(txtItemCode.getText())){
+            new Alert(Alert.AlertType.INFORMATION,""+txtItemCode.getText()+": Item Deleted !!").show();
+            loadTable();
+        }else {
             new Alert(Alert.AlertType.INFORMATION,""+txtItemCode.getText()+": Item not Deleted !!").show();
-            System.out.println(e.getMessage());
         }
     }
 
@@ -106,24 +100,7 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
-
-        PreparedStatement stm = null;
-        try {
-            String SQL="SELECT * FROM item WHERE ItemCode=?";
-            ResultSet rset = CrudUtil.execute(SQL,txtItemCode.getText());
-            rset.next();
-            setValueToText(new Item(
-                    rset.getString(1),
-                    rset.getString(2),
-                    rset.getString(3),
-                    rset.getDouble(4),
-                    rset.getInt(5)
-            ));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        setValueToText(itemController.searchItem(txtItemCode.getText()));
     }
 
     private void setValueToText(Item newValue) {
@@ -145,25 +122,10 @@ public class ItemFormController implements Initializable {
                 Integer.parseInt(txtQtyOnHand.getText())
         );
 
-        try {
-            String SQL= "UPDATE item SET Description=?,PackSize=?,UnitPrice=?,QtyOnHand=? WHERE ItemCode=?";
-
-            boolean isUpdated = CrudUtil.execute(
-                    SQL,
-                    item.getDescription(),
-                    item.getPackSize(),
-                    item.getUnitPrice(),
-                    item.getQOH(),
-                    item.getCode()
-                    );
-            if (isUpdated){
+            if (itemController.updateItem(item)){
                 new Alert(Alert.AlertType.INFORMATION,"Item Updated!").show();
                 loadTable();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,"Item Not Updated!").show();
-            System.out.println(e.getMessage());
-        }
     }
 
     @Override
@@ -185,9 +147,6 @@ public class ItemFormController implements Initializable {
 
     private void loadTable() {
         ObservableList<Item> itemObserverList = itemController.getAllItems();
-
         tblItems.setItems(itemObserverList);
-
-
     }
 }

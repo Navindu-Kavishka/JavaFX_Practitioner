@@ -2,6 +2,7 @@ package controller.item;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import model.Item;
 import util.CrudUtil;
 
@@ -29,17 +30,51 @@ public class ItemController implements ItemService {
 
     @Override
     public boolean updateItem(Item item) {
-        return false;
+        String SQL= "UPDATE item SET Description=?,PackSize=?,UnitPrice=?,QtyOnHand=? WHERE ItemCode=?";
+        try {
+            return CrudUtil.execute(
+                    SQL,
+                    item.getDescription(),
+                    item.getPackSize(),
+                    item.getUnitPrice(),
+                    item.getQOH(),
+                    item.getCode()
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Item searchItem(String itemCode) {
-        return null;
+        try {
+            String SQL="SELECT * FROM item WHERE ItemCode=?";
+            ResultSet rset = CrudUtil.execute(SQL,itemCode);
+            rset.next();
+            return new Item(
+                    rset.getString(1),
+                    rset.getString(2),
+                    rset.getString(3),
+                    rset.getDouble(4),
+                    rset.getInt(5)
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public boolean deleteItem(String itemCode) {
-        return false;
+
+            String SQL = "DELETE FROM item WHERE ItemCode=?";
+        try {
+            return CrudUtil.execute(SQL,itemCode);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     @Override
