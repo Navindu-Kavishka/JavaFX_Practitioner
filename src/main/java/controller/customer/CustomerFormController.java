@@ -80,6 +80,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
+    CustomerService customerController = new CustomerController();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -123,45 +124,22 @@ public class CustomerFormController implements Initializable {
                 txtPostalCode.getText()
         );
 
-        String SQL = "INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)";
-
-        try {
-           boolean isCustomerAdd = CrudUtil.execute(
-                   SQL,
-                   customer.getId(),
-                   customer.getTitle(),
-                   customer.getName(),
-                   customer.getDob(),
-                   customer.getSalary(),
-                   customer.getAddress(),
-                   customer.getCity(),
-                   customer.getProvince(),
-                   customer.getPostalCode()
-           );
-           if (isCustomerAdd){
+           if (customerController.addCustomer(customer)){
                new Alert(Alert.AlertType.INFORMATION,"Customer Added :)").show();
                loadTable();
+           }else {
+               new Alert(Alert.AlertType.ERROR, "Customer Not Added :(").show();
            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,"Customer Not Added :(").show();
-        }
-
-        System.out.println(customer);
 
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        String SQL = "DELETE FROM customer WHERE CustID=?";
-        try {
-            Boolean isDeleted = CrudUtil.execute(SQL,txtCustomerId.getText());
-
-            if (isDeleted){
-                new Alert(Alert.AlertType.INFORMATION,""+txtCustomerId.getText()+": Customer Deleted !!").show();
-                loadTable();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.INFORMATION,""+txtCustomerId.getText()+": Customer not Deleted !!").show();
+        if (customerController.deleteCustomer(txtCustomerId.getText())){
+            new Alert(Alert.AlertType.INFORMATION,""+txtCustomerId.getText()+": Customer Deleted !!").show();
+            loadTable();
+        }else {
+            new Alert(Alert.AlertType.INFORMATION, "" + txtCustomerId.getText() + ": Customer not Deleted !!").show();
         }
     }
 
@@ -172,25 +150,7 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
-        String SQL = "SELECT * FROM customer WHERE CustID=?";
-        try {
-
-            ResultSet resultSet = CrudUtil.execute(SQL,txtCustomerId.getText());
-            resultSet.next();
-            setValueToText(new Customer(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getDate(4).toLocalDate(),
-                    resultSet.getDouble(5),
-                    resultSet.getString(6),
-                    resultSet.getString(7),
-                    resultSet.getString(8),
-                    resultSet.getString(9)
-            ));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        setValueToText(customerController.searchCustomer(txtCustomerId.getText()));
     }
 
     @FXML
@@ -208,35 +168,17 @@ public class CustomerFormController implements Initializable {
                 txtPostalCode.getText()
         );
 
-        String SQl = "Update customer SET CustName=?, CustTitle=?, DOB=?,  salary=?,  CustAddress=?, City=?, Province=?, PostalCode=? WHERE CustID=?";
-        try {
-
-            Boolean isUpdated = CrudUtil.execute(
-                    SQl,
-                    customer.getName(),
-                    customer.getTitle(),
-                    customer.getDob(),
-                    customer.getSalary(),
-                    customer.getAddress(),
-                    customer.getCity(),
-                    customer.getProvince(),
-                    customer.getPostalCode(),
-                    customer.getId()
-            );
-
-            if (isUpdated){
-                new Alert(Alert.AlertType.INFORMATION,"Customer Updated!").show();
-                loadTable();
-            }
-
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,"Customer Not Updated!").show();
-            throw new RuntimeException(e);
+        if (customerController.updateCustomer(customer)){
+            new Alert(Alert.AlertType.INFORMATION,"Customer Updated!").show();
+            loadTable();
+        }
+        else {
+            new Alert(Alert.AlertType.ERROR, "Customer Not Updated!").show();
         }
     }
 
     private void loadTable() {
-        ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
+        ObservableList<Customer> customers = customerController.getAllCustomers();
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -247,33 +189,8 @@ public class CustomerFormController implements Initializable {
         colCity.setCellValueFactory(new PropertyValueFactory<>("city"));
         colPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         colProvince.setCellValueFactory(new PropertyValueFactory<>("province"));
-        try {
 
-            String SQL = "SELECT * FROM customer";
-
-            ResultSet resultSet = CrudUtil.execute(SQL);
-
-            while (resultSet.next()) {
-                Customer customer = new Customer(
-                        resultSet.getString("CustID"),
-                        resultSet.getString("CustTitle"),
-                        resultSet.getString("CustName"),
-                        resultSet.getDate("dob").toLocalDate(),
-                        resultSet.getDouble("salary"),
-                        resultSet.getString("CustAddress"),
-                        resultSet.getString("city"),
-                        resultSet.getString("province"),
-                        resultSet.getString("postalCode")
-                );
-                customerObservableList.add(customer);
-            }
-
-            tblCustomers.setItems(customerObservableList);
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        tblCustomers.setItems(customers);
     }
 
 

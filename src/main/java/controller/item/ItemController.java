@@ -66,8 +66,7 @@ public class ItemController implements ItemService {
 
     @Override
     public boolean deleteItem(String itemCode) {
-
-            String SQL = "DELETE FROM item WHERE ItemCode=?";
+        String SQL = "DELETE FROM item WHERE ItemCode=?";
         try {
             return CrudUtil.execute(SQL,itemCode);
         } catch (SQLException e) {

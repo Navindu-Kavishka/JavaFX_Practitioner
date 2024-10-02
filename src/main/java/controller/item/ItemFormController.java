@@ -60,8 +60,6 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
-
-        try {
             Item item= new Item(
                     txtItemCode.getText(),
                     txtDescription.getText(),
@@ -70,16 +68,13 @@ public class ItemFormController implements Initializable {
                     Integer.parseInt(txtQtyOnHand.getText())
             );
 
-
-            boolean isAdded =itemController.addItem(item);
-            if (isAdded){
+            if (itemController.addItem(item)){
                 new Alert(Alert.AlertType.INFORMATION,"Item Added :)").show();
                 loadTable();
+            }else {
+                new Alert(Alert.AlertType.INFORMATION, "Item not Added :(").show();
             }
-        }catch (Throwable ex){
-            new Alert(Alert.AlertType.INFORMATION,"Item not Added :(").show();
-            System.out.println(ex.getMessage());
-        }
+
 
     }
 
