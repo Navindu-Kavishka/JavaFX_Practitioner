@@ -13,7 +13,7 @@
 
 
 <AnchorPane prefHeight="535.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.CustomerFormController">
+            fx:controller="controller.customer.CustomerFormController">
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b5091" height="64.0" layoutY="-3.0" stroke="BLACK"
                strokeType="INSIDE" strokeWidth="0.0" width="932.0"/>
     <Label layoutX="371.0" layoutY="9.0" text="Customer From" textFill="WHITE">

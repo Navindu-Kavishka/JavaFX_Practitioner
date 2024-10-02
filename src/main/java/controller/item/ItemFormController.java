@@ -1,4 +1,4 @@
-package controller;
+package controller.item;
 
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Item;
+import util.CrudUtil;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -55,8 +56,11 @@ public class ItemFormController implements Initializable {
     @FXML
     private JFXTextField txtUnitPrice;
 
+    ItemService itemController = new ItemController();
+
     @FXML
     void btnAddOnAction(ActionEvent event) {
+
         try {
             Item item= new Item(
                     txtItemCode.getText(),
@@ -66,20 +70,11 @@ public class ItemFormController implements Initializable {
                     Integer.parseInt(txtQtyOnHand.getText())
             );
 
-            try {
-                PreparedStatement stm = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
-                stm.setObject(1,item.getCode());
-                stm.setObject(2,item.getDescription());
-                stm.setObject(3,item.getPackSize());
-                stm.setObject(4,item.getUnitPrice());
-                stm.setObject(5,item.getQOH());
-                if (stm.executeUpdate()>0){
-                    new Alert(Alert.AlertType.INFORMATION,"Item Added :)").show();
-                    loadTable();
-                }
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.INFORMATION,"Item not Added :(").show();
-                System.out.println(e.getMessage());
+
+            boolean isAdded =itemController.addItem(item);
+            if (isAdded){
+                new Alert(Alert.AlertType.INFORMATION,"Item Added :)").show();
+                loadTable();
             }
         }catch (Throwable ex){
             new Alert(Alert.AlertType.INFORMATION,"Item not Added :(").show();
@@ -91,9 +86,9 @@ public class ItemFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         try {
-            int res = DBConnection.getInstance().getConnection().createStatement().executeUpdate("DELETE FROM item WHERE ItemCode='" + txtItemCode.getText() + "'");
-
-            if (res>0){
+            String SQL = "DELETE FROM item WHERE ItemCode=?";
+            boolean isDeleted = CrudUtil.execute(SQL,txtItemCode.getText());
+            if (isDeleted){
                 new Alert(Alert.AlertType.INFORMATION,""+txtItemCode.getText()+": Item Deleted !!").show();
                 loadTable();
             }
@@ -114,9 +109,8 @@ public class ItemFormController implements Initializable {
 
         PreparedStatement stm = null;
         try {
-            stm = DBConnection.getInstance().getConnection().prepareStatement("SELECT * FROM item WHERE ItemCode=?");
-            stm.setObject(1,txtItemCode.getText());
-            ResultSet rset = stm.executeQuery();
+            String SQL="SELECT * FROM item WHERE ItemCode=?";
+            ResultSet rset = CrudUtil.execute(SQL,txtItemCode.getText());
             rset.next();
             setValueToText(new Item(
                     rset.getString(1),
@@ -152,15 +146,17 @@ public class ItemFormController implements Initializable {
         );
 
         try {
-            PreparedStatement stm = DBConnection.getInstance().getConnection().prepareStatement("UPDATE item SET Description=?,PackSize=?,UnitPrice=?,QtyOnHand=? WHERE ItemCode=?");
-            stm.setObject(1,item.getDescription());
-            stm.setObject(2,item.getPackSize());
-            stm.setObject(3,item.getUnitPrice());
-            stm.setObject(4,item.getQOH());
-            stm.setObject(5,item.getCode());
+            String SQL= "UPDATE item SET Description=?,PackSize=?,UnitPrice=?,QtyOnHand=? WHERE ItemCode=?";
 
-            int i = stm.executeUpdate();
-            if (i>0){
+            boolean isUpdated = CrudUtil.execute(
+                    SQL,
+                    item.getDescription(),
+                    item.getPackSize(),
+                    item.getUnitPrice(),
+                    item.getQOH(),
+                    item.getCode()
+                    );
+            if (isUpdated){
                 new Alert(Alert.AlertType.INFORMATION,"Item Updated!").show();
                 loadTable();
             }
@@ -172,6 +168,12 @@ public class ItemFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colDsc.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colQOH.setCellValueFactory(new PropertyValueFactory<>("QOH"));
+
         loadTable();
 
         tblItems.getSelectionModel().selectedItemProperty().addListener((observableValue, item, newValue) -> {
@@ -182,32 +184,9 @@ public class ItemFormController implements Initializable {
     }
 
     private void loadTable() {
-        ObservableList<Item> itemObserverList = FXCollections.observableArrayList();
+        ObservableList<Item> itemObserverList = itemController.getAllItems();
 
-        try {
-            ResultSet rset = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM item");
-
-            colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-            colDsc.setCellValueFactory(new PropertyValueFactory<>("description"));
-            colPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
-            colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-            colQOH.setCellValueFactory(new PropertyValueFactory<>("QOH"));
-
-            while (rset.next()){
-                Item item = new Item(
-                        rset.getString("ItemCode"),
-                        rset.getString("Description"),
-                        rset.getString("PackSize"),
-                        rset.getDouble("UnitPrice"),
-                        rset.getInt("QtyOnHand")
-                );
-                itemObserverList.add(item);
-            }
-            tblItems.setItems(itemObserverList);
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        tblItems.setItems(itemObserverList);
 
 
     }

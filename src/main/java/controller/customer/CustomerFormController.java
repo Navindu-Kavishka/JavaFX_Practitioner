@@ -1,4 +1,4 @@
-package controller;
+package controller.customer;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
+import util.CrudUtil;
 
 import java.net.URL;
 import java.sql.*;
@@ -125,18 +126,18 @@ public class CustomerFormController implements Initializable {
         String SQL = "INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)";
 
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement psTm = connection.prepareStatement(SQL);
-            psTm.setObject(1,customer.getId());
-            psTm.setObject(2,customer.getTitle());
-            psTm.setObject(3,customer.getName());
-            psTm.setObject(4,customer.getDob());
-            psTm.setObject(5,customer.getSalary());
-            psTm.setObject(6,customer.getAddress());
-            psTm.setObject(7,customer.getCity());
-            psTm.setObject(8,customer.getProvince());
-            psTm.setObject(9,customer.getPostalCode());
-           boolean isCustomerAdd = psTm.executeUpdate()>0;
+           boolean isCustomerAdd = CrudUtil.execute(
+                   SQL,
+                   customer.getId(),
+                   customer.getTitle(),
+                   customer.getName(),
+                   customer.getDob(),
+                   customer.getSalary(),
+                   customer.getAddress(),
+                   customer.getCity(),
+                   customer.getProvince(),
+                   customer.getPostalCode()
+           );
            if (isCustomerAdd){
                new Alert(Alert.AlertType.INFORMATION,"Customer Added :)").show();
                loadTable();
@@ -151,10 +152,10 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        String SQL = "DELETE FROM customer WHERE CustID= '"+txtCustomerId.getText()+"'";
+        String SQL = "DELETE FROM customer WHERE CustID=?";
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            Boolean isDeleted = connection.createStatement().executeUpdate(SQL)>0;
+            Boolean isDeleted = CrudUtil.execute(SQL,txtCustomerId.getText());
+
             if (isDeleted){
                 new Alert(Alert.AlertType.INFORMATION,""+txtCustomerId.getText()+": Customer Deleted !!").show();
                 loadTable();
@@ -173,11 +174,8 @@ public class CustomerFormController implements Initializable {
     void btnSearchOnAction(ActionEvent event) {
         String SQL = "SELECT * FROM customer WHERE CustID=?";
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
 
-            PreparedStatement psTm = connection.prepareStatement(SQL);
-            psTm.setObject(1,txtCustomerId.getText());
-            ResultSet resultSet = psTm.executeQuery();
+            ResultSet resultSet = CrudUtil.execute(SQL,txtCustomerId.getText());
             resultSet.next();
             setValueToText(new Customer(
                     resultSet.getString(1),
@@ -212,18 +210,19 @@ public class CustomerFormController implements Initializable {
 
         String SQl = "Update customer SET CustName=?, CustTitle=?, DOB=?,  salary=?,  CustAddress=?, City=?, Province=?, PostalCode=? WHERE CustID=?";
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement psTm = connection.prepareStatement(SQl);
-            psTm.setObject(1,customer.getName());
-            psTm.setObject(2,customer.getTitle());
-            psTm.setObject(3,customer.getDob());
-            psTm.setObject(4,customer.getSalary());
-            psTm.setObject(5,customer.getAddress());
-            psTm.setObject(6,customer.getCity());
-            psTm.setObject(7,customer.getProvince());
-            psTm.setObject(8,customer.getPostalCode());
-            psTm.setObject(9,customer.getId());
-            Boolean isUpdated = psTm.executeUpdate()>0;
+
+            Boolean isUpdated = CrudUtil.execute(
+                    SQl,
+                    customer.getName(),
+                    customer.getTitle(),
+                    customer.getDob(),
+                    customer.getSalary(),
+                    customer.getAddress(),
+                    customer.getCity(),
+                    customer.getProvince(),
+                    customer.getPostalCode(),
+                    customer.getId()
+            );
 
             if (isUpdated){
                 new Alert(Alert.AlertType.INFORMATION,"Customer Updated!").show();
@@ -250,11 +249,9 @@ public class CustomerFormController implements Initializable {
         colProvince.setCellValueFactory(new PropertyValueFactory<>("province"));
         try {
 
-            Connection connection = DBConnection.getInstance().getConnection();
-
             String SQL = "SELECT * FROM customer";
 
-            ResultSet resultSet = connection.createStatement().executeQuery(SQL);
+            ResultSet resultSet = CrudUtil.execute(SQL);
 
             while (resultSet.next()) {
                 Customer customer = new Customer(
