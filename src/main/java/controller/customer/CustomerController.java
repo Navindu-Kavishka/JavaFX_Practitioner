@@ -8,6 +8,7 @@ import util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class CustomerController implements CustomerService {
 
@@ -110,5 +111,15 @@ public class CustomerController implements CustomerService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ObservableList<String> getCustomerIds(){
+        ObservableList<Customer> allCustomers = getAllCustomers();
+        ObservableList<String> idList = FXCollections.observableArrayList();
+
+        allCustomers.forEach(customer -> {
+            idList.add(customer.getId());
+        });
+        return idList;
     }
 }
