@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #7CF5FF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+   <children>
+      <Label layoutX="214.0" layoutY="26.0" text="Thogakade">
+         <font>
+            <Font name="Berlin Sans FB" size="36.0" />
+         </font>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </Label>
+      <JFXButton layoutX="222.0" layoutY="116.0" onAction="#btnCustomerFormOnAction" style="-fx-background-color: #6439FF;" text="Customer Form" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="244.0" layoutY="200.0" onAction="#btnItemFormOnAction" style="-fx-background-color: #4F75FF;" text="Item Form" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

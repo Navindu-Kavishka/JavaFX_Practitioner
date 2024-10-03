@@ -10,10 +10,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="526.0" prefWidth="912.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.item.ItemFormController">
+<AnchorPane prefHeight="578.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.item.ItemFormController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b5091" height="64.0" layoutX="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b5091" height="64.0" layoutX="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="939.0" />
       <Label layoutX="371.0" layoutY="12.0" text="Item From" textFill="WHITE">
          <font>
             <Font name="System Bold" size="29.0" />
@@ -52,7 +51,10 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="443.0" layoutY="493.0" onAction="#btnReloadOnAction" text="Reload" />
+      <JFXButton layoutX="764.0" layoutY="515.0" onAction="#btnCustometFormOnAction" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #604CC3;" text="Customer Form" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></JFXButton>
       <JFXTextArea fx:id="txtDescription" layoutX="461.0" layoutY="100.0" prefHeight="82.0" prefWidth="436.0" promptText="Description" />
    </children>
 </AnchorPane>
