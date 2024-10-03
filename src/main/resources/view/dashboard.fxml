@@ -27,5 +27,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
+      <JFXButton layoutX="214.0" layoutY="275.0" onAction="#btnPlaceOrderFormOnAction" style="-fx-background-color: #8967B3;" text="Place Order Form" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
