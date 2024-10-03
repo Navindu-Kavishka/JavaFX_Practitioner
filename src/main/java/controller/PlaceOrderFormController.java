@@ -83,9 +83,17 @@ public class PlaceOrderFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        cmbCustomerId.getSelectionModel().selectedItemProperty().addListener((observableValue, s, newValue) -> {
+            System.out.println(newValue);
+        });
+
+        cmbItemCode.getSelectionModel().selectedItemProperty().addListener((observableValue, s, newValue) -> {
+            System.out.println(newValue);
+        } );
+
         loadDateAndTime();
         loadCustomerIds();
-        loadItemCodes();
         loadItemCodes();
     }
 
