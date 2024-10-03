@@ -19,7 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import model.Customer;
 import model.Item;
-import model.cartTM;
+import model.CartTM;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -60,7 +60,7 @@ public class PlaceOrderFormController implements Initializable {
     private Label lblTime;
 
     @FXML
-    private TableView<cartTM> tblCart;
+    private TableView<CartTM> tblCart;
 
     @FXML
     private JFXTextField txtCity;
@@ -108,14 +108,14 @@ public class PlaceOrderFormController implements Initializable {
         loadItemCodes();
     }
 
-    ObservableList<cartTM> cart = FXCollections.observableArrayList();
+    ObservableList<CartTM> cart = FXCollections.observableArrayList();
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
         Double unitPrice= Double.valueOf(txtUnitPrice.getText());
         Integer qty = Integer.valueOf(txtQty.getText());
         Double total = unitPrice*qty;
         cart.add(
-                new cartTM(
+                new CartTM(
                         cmbItemCode.getValue(),
                         txtDescription.getText(),
                         qty,
@@ -123,8 +123,8 @@ public class PlaceOrderFormController implements Initializable {
                         total
                 )
         );
-
         tblCart.setItems(cart);
+        calcNetTotal();
     }
 
     @FXML
@@ -171,6 +171,13 @@ public class PlaceOrderFormController implements Initializable {
         txtDescription.setText(item.getDescription());
         txtUnitPrice.setText(item.getUnitPrice().toString());
         txtStock.setText(item.getQOH().toString());
+    }
+    private void calcNetTotal(){
+        Double netTotal=0.0;
+        for (CartTM cartTM: cart) {
+            netTotal+= cartTM.getTotal();
+        }
+        lblNetTotal.setText(netTotal.toString());
     }
 
 }
