@@ -72,8 +72,6 @@ public class ItemController implements ItemService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Override
@@ -97,5 +95,15 @@ public class ItemController implements ItemService {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    public ObservableList<String> getItemCodes(){
+        ObservableList<Item> allItems = getAllItems();
+        ObservableList<String> itemCodeList = FXCollections.observableArrayList();
+
+        allItems.forEach(item -> {
+            itemCodeList.add(item.getCode());
+        });
+        return itemCodeList;
     }
 }

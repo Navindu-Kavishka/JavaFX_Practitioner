@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import controller.customer.CustomerController;
+import controller.item.ItemController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -84,6 +85,8 @@ public class PlaceOrderFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDateAndTime();
         loadCustomerIds();
+        loadItemCodes();
+        loadItemCodes();
     }
 
     @FXML
@@ -118,6 +121,11 @@ public class PlaceOrderFormController implements Initializable {
     CustomerController customerController = new CustomerController();
     private void loadCustomerIds(){
         cmbCustomerId.setItems(customerController.getCustomerIds());
+    }
+
+    ItemController itemController=new ItemController();
+    private void loadItemCodes(){
+        cmbItemCode.setItems(itemController.getItemCodes());
     }
 
 }
