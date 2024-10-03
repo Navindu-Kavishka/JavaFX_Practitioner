@@ -14,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Duration;
+import model.Customer;
+import model.Item;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -85,11 +87,11 @@ public class PlaceOrderFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         cmbCustomerId.getSelectionModel().selectedItemProperty().addListener((observableValue, s, newValue) -> {
-            System.out.println(newValue);
+            loadCustomerData(newValue);
         });
 
         cmbItemCode.getSelectionModel().selectedItemProperty().addListener((observableValue, s, newValue) -> {
-            System.out.println(newValue);
+            loadItemData(newValue);
         } );
 
         loadDateAndTime();
@@ -134,6 +136,18 @@ public class PlaceOrderFormController implements Initializable {
     ItemController itemController=new ItemController();
     private void loadItemCodes(){
         cmbItemCode.setItems(itemController.getItemCodes());
+    }
+    private void loadCustomerData(String customerId){
+        Customer customer = customerController.searchCustomer(customerId);
+        txtName.setText(customer.getName());
+        txtCity.setText(customer.getCity());
+        txtSalary.setText(customer.getSalary().toString());
+    }
+    private void loadItemData(String itemCode){
+        Item item = itemController.searchItem(itemCode);
+        txtDescription.setText(item.getDescription());
+        txtUnitPrice.setText(item.getUnitPrice().toString());
+        txtStock.setText(item.getQOH().toString());
     }
 
 }
