@@ -7,22 +7,25 @@ import controller.item.ItemController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import model.Customer;
 import model.Item;
+import model.cartTM;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.logging.SimpleFormatter;
 
 public class PlaceOrderFormController implements Initializable {
 
@@ -57,7 +60,7 @@ public class PlaceOrderFormController implements Initializable {
     private Label lblTime;
 
     @FXML
-    private TableView<?> tblCart;
+    private TableView<cartTM> tblCart;
 
     @FXML
     private JFXTextField txtCity;
@@ -86,6 +89,12 @@ public class PlaceOrderFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        colItemCode.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+
         cmbCustomerId.getSelectionModel().selectedItemProperty().addListener((observableValue, s, newValue) -> {
             loadCustomerData(newValue);
         });
@@ -99,9 +108,23 @@ public class PlaceOrderFormController implements Initializable {
         loadItemCodes();
     }
 
+    ObservableList<cartTM> cart = FXCollections.observableArrayList();
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
+        Double unitPrice= Double.valueOf(txtUnitPrice.getText());
+        Integer qty = Integer.valueOf(txtQty.getText());
+        Double total = unitPrice*qty;
+        cart.add(
+                new cartTM(
+                        cmbItemCode.getValue(),
+                        txtDescription.getText(),
+                        qty,
+                        unitPrice,
+                        total
+                )
+        );
 
+        tblCart.setItems(cart);
     }
 
     @FXML
