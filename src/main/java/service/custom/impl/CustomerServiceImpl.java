@@ -1,7 +1,7 @@
 package service.custom.impl;
 
 import javafx.collections.ObservableList;
-import model.Customer;
+import dto.Customer;
 import service.custom.CustomerService;
 
 public class CustomerServiceImpl implements CustomerService {

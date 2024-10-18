@@ -18,7 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
-import model.*;
+import dto.*;
 
 import java.net.URL;
 import java.sql.SQLException;

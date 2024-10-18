@@ -2,7 +2,6 @@ package controller.customer;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,12 +12,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Customer;
-import util.CrudUtil;
+import dto.Customer;
+import service.ServiceFactory;
+import service.SuperService;
+import util.ServiceType;
 
 import java.net.URL;
-import java.sql.*;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
@@ -124,12 +123,22 @@ public class CustomerFormController implements Initializable {
                 txtPostalCode.getText()
         );
 
-           if (customerController.addCustomer(customer)){
-               new Alert(Alert.AlertType.INFORMATION,"Customer Added :)").show();
-               loadTable();
-           }else {
-               new Alert(Alert.AlertType.ERROR, "Customer Not Added :(").show();
-           }
+
+        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+
+
+        if (service.addCustomer(customer)){
+            new Alert(Alert.AlertType.INFORMATION,"Customer Added ! ").show();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Customer not Added ! ").show();
+        }
+
+//           if (customerController.addCustomer(customer)){
+//               new Alert(Alert.AlertType.INFORMATION,"Customer Added :)").show();
+//               loadTable();
+//           }else {
+//               new Alert(Alert.AlertType.ERROR, "Customer Not Added :(").show();
+//           }
 
     }
 

@@ -11,8 +11,8 @@ public class ServiceFactory {
     private ServiceFactory(){
     }
 
-    public static ServiceFactory getFactory() {
-        return factory==null ? new ServiceFactory() : factory;
+    public static ServiceFactory getInstance() {
+        return factory!=null?factory:(factory=new ServiceFactory());
     }
 
     public <T extends SuperService>T getServiceType(ServiceType serviceType){

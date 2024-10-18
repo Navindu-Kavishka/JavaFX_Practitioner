@@ -1,7 +1,7 @@
 package controller.item;
 
 import javafx.collections.ObservableList;
-import model.Item;
+import dto.Item;
 
 public interface ItemService {
     boolean addItem (Item item);
