@@ -129,16 +129,10 @@ public class CustomerFormController implements Initializable {
 
         if (service.addCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION,"Customer Added ! ").show();
+            loadTable();
         }else {
             new Alert(Alert.AlertType.ERROR,"Customer not Added ! ").show();
         }
-
-//           if (customerController.addCustomer(customer)){
-//               new Alert(Alert.AlertType.INFORMATION,"Customer Added :)").show();
-//               loadTable();
-//           }else {
-//               new Alert(Alert.AlertType.ERROR, "Customer Not Added :(").show();
-//           }
 
     }
 
