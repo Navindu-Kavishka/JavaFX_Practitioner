@@ -14,6 +14,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import dto.Item;
+import service.ServiceFactory;
+import service.SuperService;
+import util.ServiceType;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,13 +69,14 @@ public class ItemFormController implements Initializable {
                     Integer.parseInt(txtQtyOnHand.getText())
             );
 
-            if (itemController.addItem(item)){
-                new Alert(Alert.AlertType.INFORMATION,"Item Added :)").show();
-                loadTable();
-            }else {
-                new Alert(Alert.AlertType.INFORMATION, "Item not Added :(").show();
-            }
+        service.custom.ItemService service = ServiceFactory.getInstance().getServiceType(ServiceType.ITEM);
 
+        if (service.addItem(item)){
+            new Alert(Alert.AlertType.INFORMATION,"Item Added :)").show();
+                loadTable();
+        }else {
+            new Alert(Alert.AlertType.INFORMATION, "Item not Added :(").show();
+        }
 
     }
 

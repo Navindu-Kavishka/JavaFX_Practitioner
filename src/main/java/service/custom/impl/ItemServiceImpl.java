@@ -1,13 +1,22 @@
 package service.custom.impl;
 
 import dto.Item;
+import entity.ItemEntity;
 import javafx.collections.ObservableList;
+import org.modelmapper.ModelMapper;
+import repository.DaoFactory;
+import repository.SuperDao;
+import repository.custom.ItemDao;
 import service.custom.ItemService;
+import util.DaoType;
 
 public class ItemServiceImpl implements ItemService {
     @Override
     public boolean addItem(Item item) {
-        return false;
+        System.out.println("Item Service : "+item);
+        ItemDao itemDao = DaoFactory.getInstance().getDaoType(DaoType.ITEM);
+        return itemDao.save(new ModelMapper().map(item, ItemEntity.class));
+
     }
 
     @Override
