@@ -185,7 +185,8 @@ public class PlaceOrderFormController implements Initializable {
         cmbCustomerId.setItems(customerController.getIds());
     }
 
-    ItemController itemController=new ItemController();
+    service.custom.ItemService itemController = ServiceFactory.getInstance().getServiceType(ServiceType.ITEM);
+    //ItemController itemController=new ItemController();
     private void loadItemCodes(){
         cmbItemCode.setItems(itemController.getItemCodes());
     }

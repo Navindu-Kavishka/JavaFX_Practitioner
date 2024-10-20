@@ -15,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import dto.Item;
 import service.ServiceFactory;
-import service.SuperService;
 import util.ServiceType;
 
 import java.io.IOException;
@@ -145,7 +144,7 @@ public class ItemFormController implements Initializable {
         tblItems.setItems(itemObserverList);
     }
 
-    public void btnCustometFormOnAction(ActionEvent event) {
+    public void btnCustomerFormOnAction(ActionEvent event) {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/customer_form.fxml"))));

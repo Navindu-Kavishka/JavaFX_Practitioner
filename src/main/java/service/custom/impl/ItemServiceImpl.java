@@ -46,4 +46,9 @@ public class ItemServiceImpl implements ItemService {
         });
         return itemList;
     }
+
+    @Override
+    public ObservableList<String> getItemCodes(){
+        return dao.getIds();
+    }
 }

@@ -12,4 +12,7 @@ public interface ItemService extends SuperService {
     boolean deleteItem (String itemCode);
     ObservableList<Item> getAllItems();
 
+    ObservableList<String> getItemCodes();
+
+
 }
