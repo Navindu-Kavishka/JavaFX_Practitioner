@@ -2,6 +2,7 @@ package service.custom.impl;
 
 import dto.Item;
 import entity.ItemEntity;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.modelmapper.ModelMapper;
 import repository.DaoFactory;
@@ -38,6 +39,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ObservableList<Item> getAllItems() {
-        return null;
+        ObservableList<ItemEntity> itemEntityList = dao.findAll();
+        ObservableList<Item> itemList = FXCollections.observableArrayList();
+        itemEntityList.forEach(itemEntity -> {
+            itemList.add(new ModelMapper().map(itemEntity,Item.class));
+        });
+        return itemList;
     }
 }

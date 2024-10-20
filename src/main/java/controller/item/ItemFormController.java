@@ -141,7 +141,7 @@ public class ItemFormController implements Initializable {
     }
 
     private void loadTable() {
-        ObservableList<Item> itemObserverList = itemController.getAllItems();
+        ObservableList<Item> itemObserverList = service.getAllItems();
         tblItems.setItems(itemObserverList);
     }
 

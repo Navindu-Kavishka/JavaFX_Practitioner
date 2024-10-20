@@ -2,7 +2,9 @@ package repository.custom.impl;
 
 import dto.Item;
 import entity.ItemEntity;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.modelmapper.ModelMapper;
 import repository.custom.ItemDao;
 import util.CrudUtil;
 
@@ -58,7 +60,29 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public ObservableList<ItemEntity> findAll() {
-        return null;
+        String SQL="SELECT * FROM item";
+        ObservableList<Item> itemObservableList = FXCollections.observableArrayList();
+        try {
+            ResultSet rset = CrudUtil.execute(SQL);
+
+            while (rset.next()){
+                itemObservableList.add(new Item(
+                        rset.getString(1),
+                        rset.getString(2),
+                        rset.getString(3),
+                        rset.getDouble(4),
+                        rset.getInt(5)
+                ));
+            }
+            ObservableList<ItemEntity> itemEntityList = FXCollections.observableArrayList();
+            itemObservableList.forEach(item -> {
+                itemEntityList.add(new ModelMapper().map(item,ItemEntity.class));
+            });
+            return itemEntityList;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
