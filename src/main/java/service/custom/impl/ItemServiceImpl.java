@@ -23,7 +23,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public boolean updateItem(Item item) {
-        return false;
+        return dao.update(new ModelMapper().map(item,ItemEntity.class));
     }
 
     @Override

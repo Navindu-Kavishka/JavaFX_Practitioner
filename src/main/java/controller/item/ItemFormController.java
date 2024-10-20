@@ -117,7 +117,7 @@ public class ItemFormController implements Initializable {
                 Integer.parseInt(txtQtyOnHand.getText())
         );
 
-            if (itemController.updateItem(item)){
+            if (service.updateItem(item)){
                 new Alert(Alert.AlertType.INFORMATION,"Item Updated!").show();
                 loadTable();
             }
