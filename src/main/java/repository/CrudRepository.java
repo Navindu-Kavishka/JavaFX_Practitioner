@@ -11,4 +11,5 @@ public interface CrudRepository <T,ID> extends SuperDao{
     boolean delete(ID id);
     ObservableList<T> findAll();
     Object  search(String id);
+    ObservableList<String> getIds();
 }

@@ -115,4 +115,15 @@ public class CustomerDaoImpl implements CustomerDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public ObservableList<String> getIds() {
+        ObservableList<CustomerEntity> allCustomers = findAll();
+        ObservableList<String> idList = FXCollections.observableArrayList();
+
+        allCustomers.forEach(customer -> {
+            idList.add(customer.getId());
+        });
+        return idList;
+    }
 }

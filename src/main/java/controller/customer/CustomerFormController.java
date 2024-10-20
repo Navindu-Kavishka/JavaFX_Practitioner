@@ -78,7 +78,8 @@ public class CustomerFormController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
-    CustomerService1 customerController = new CustomerController();
+
+    service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -120,7 +121,7 @@ public class CustomerFormController implements Initializable {
                 txtProvince.getText(),
                 txtPostalCode.getText()
         );
-        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+
 
         if (service.addCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION,"Customer Added ! ").show();
@@ -133,7 +134,6 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
         if (service.deleteCustomer(txtCustomerId.getText())){
             new Alert(Alert.AlertType.INFORMATION,""+txtCustomerId.getText()+": Customer Deleted !!").show();
             loadTable();
@@ -144,7 +144,6 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
-        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
         setValueToText(service.searchCustomer(txtCustomerId.getText()));
     }
 
@@ -163,8 +162,6 @@ public class CustomerFormController implements Initializable {
                 txtPostalCode.getText()
         );
 
-        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
-
         if (service.updateCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION,"Customer Updated!").show();
             loadTable();
@@ -175,9 +172,6 @@ public class CustomerFormController implements Initializable {
     }
 
     private void loadTable() {
-        //ObservableList<Customer> customers = customerController.getAllCustomers();
-
-        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
         ObservableList<Customer> customers = service.getAllCustomers();
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));

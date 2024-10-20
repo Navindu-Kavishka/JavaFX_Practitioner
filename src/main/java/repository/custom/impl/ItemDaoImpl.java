@@ -47,4 +47,9 @@ public class ItemDaoImpl implements ItemDao {
     public Item search(String id) {
         return null;
     }
+
+    @Override
+    public ObservableList<String> getIds() {
+        return null;
+    }
 }

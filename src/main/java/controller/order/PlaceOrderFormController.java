@@ -2,7 +2,6 @@ package controller.order;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import controller.customer.CustomerController;
 import controller.item.ItemController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -19,6 +18,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import dto.*;
+import service.ServiceFactory;
+import util.ServiceType;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -178,9 +179,10 @@ public class PlaceOrderFormController implements Initializable {
     }
 
 
-    CustomerController customerController = new CustomerController();
+    service.custom.CustomerService customerController = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+    //CustomerController customerController = new CustomerController();
     private void loadCustomerIds(){
-        cmbCustomerId.setItems(customerController.getCustomerIds());
+        cmbCustomerId.setItems(customerController.getIds());
     }
 
     ItemController itemController=new ItemController();
