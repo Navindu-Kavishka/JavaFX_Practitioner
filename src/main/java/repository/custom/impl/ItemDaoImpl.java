@@ -34,8 +34,13 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public boolean delete(String s) {
-        return false;
+    public boolean delete(String itemCode) {
+        String SQL = "DELETE FROM item WHERE ItemCode=?";
+        try {
+            return CrudUtil.execute(SQL,itemCode);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
