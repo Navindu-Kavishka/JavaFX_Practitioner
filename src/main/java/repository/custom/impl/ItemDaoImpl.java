@@ -2,11 +2,11 @@ package repository.custom.impl;
 
 import dto.Item;
 import entity.ItemEntity;
+import javafx.collections.ObservableList;
 import repository.custom.ItemDao;
 import util.CrudUtil;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class ItemDaoImpl implements ItemDao {
     @Override
@@ -39,7 +39,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public List<ItemEntity> findAll() {
+    public ObservableList<ItemEntity> findAll() {
         return null;
     }
 

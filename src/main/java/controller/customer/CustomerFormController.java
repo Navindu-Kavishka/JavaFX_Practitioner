@@ -175,7 +175,10 @@ public class CustomerFormController implements Initializable {
     }
 
     private void loadTable() {
-        ObservableList<Customer> customers = customerController.getAllCustomers();
+        //ObservableList<Customer> customers = customerController.getAllCustomers();
+
+        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+        ObservableList<Customer> customers = service.getAllCustomers();
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));

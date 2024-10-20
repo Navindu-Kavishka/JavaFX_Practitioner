@@ -2,15 +2,14 @@ package repository.custom.impl;
 
 import dto.Customer;
 import entity.CustomerEntity;
-import repository.DaoFactory;
-import repository.SuperDao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.modelmapper.ModelMapper;
 import repository.custom.CustomerDao;
 import util.CrudUtil;
-import util.DaoType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class CustomerDaoImpl implements CustomerDao {
     @Override
@@ -68,8 +67,32 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public List<CustomerEntity> findAll() {
-        return null;
+    public ObservableList<CustomerEntity> findAll() {
+        String SQL = "SELECT * FROM customer";
+        ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
+        try {
+            ResultSet resultSet = CrudUtil.execute(SQL);
+            while (resultSet.next()) {
+                customerObservableList.add(new Customer(
+                        resultSet.getString("CustID"),
+                        resultSet.getString("CustTitle"),
+                        resultSet.getString("CustName"),
+                        resultSet.getDate("dob").toLocalDate(),
+                        resultSet.getDouble("salary"),
+                        resultSet.getString("CustAddress"),
+                        resultSet.getString("city"),
+                        resultSet.getString("province"),
+                        resultSet.getString("postalCode")
+                ));
+            }
+            ObservableList<CustomerEntity> customerEntityList = FXCollections.observableArrayList();
+            customerObservableList.forEach(customer -> {
+                customerEntityList.add(new ModelMapper().map(customer,CustomerEntity.class));
+            });
+            return customerEntityList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Customer search(String id) {

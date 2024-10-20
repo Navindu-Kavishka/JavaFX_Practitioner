@@ -1,6 +1,7 @@
 package service.custom.impl;
 
 import entity.CustomerEntity;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import dto.Customer;
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,9 @@ import repository.SuperDao;
 import repository.custom.CustomerDao;
 import service.custom.CustomerService;
 import util.DaoType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
     @Override
@@ -40,6 +44,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ObservableList<Customer> getAllCustomers() {
-        return null;
+        CustomerDao dao = DaoFactory.getInstance().getDaoType(DaoType.CUSTOMER);
+        List<CustomerEntity> customerEntities = dao.findAll();
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
+        customerEntities.forEach(customerEntity -> {
+            customers.add(new ModelMapper().map(customerEntity,Customer.class));
+        });
+        return  customers;
     }
 }
