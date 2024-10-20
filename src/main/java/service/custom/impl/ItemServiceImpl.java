@@ -28,7 +28,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item searchItem(String itemCode) {
-        return null;
+        return new ModelMapper().map(dao.search(itemCode),Item.class);
     }
 
     @Override

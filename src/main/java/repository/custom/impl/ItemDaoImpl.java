@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import repository.custom.ItemDao;
 import util.CrudUtil;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ItemDaoImpl implements ItemDao {
@@ -49,8 +50,22 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public Item search(String id) {
-        return null;
+    public Item search(String itemCode) {
+        try {
+            String SQL="SELECT * FROM item WHERE ItemCode=?";
+            ResultSet rset = CrudUtil.execute(SQL,itemCode);
+            rset.next();
+            return new Item(
+                    rset.getString(1),
+                    rset.getString(2),
+                    rset.getString(3),
+                    rset.getDouble(4),
+                    rset.getInt(5)
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

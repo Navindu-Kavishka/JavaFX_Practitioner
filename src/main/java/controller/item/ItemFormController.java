@@ -95,7 +95,7 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
-        setValueToText(itemController.searchItem(txtItemCode.getText()));
+        setValueToText(service.searchItem(txtItemCode.getText()));
     }
 
     private void setValueToText(Item newValue) {
