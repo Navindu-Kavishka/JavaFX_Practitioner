@@ -42,8 +42,14 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public boolean delete(String s) {
-        return false;
+    public boolean delete(String id) {
+        System.out.println("repo customer delete"+ id);
+        String SQL = "DELETE FROM customer WHERE CustID=?";
+        try {
+            return CrudUtil.execute(SQL,id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

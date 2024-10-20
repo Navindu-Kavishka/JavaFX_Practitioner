@@ -110,7 +110,6 @@ public class CustomerFormController implements Initializable {
     }
     @FXML
     void btnAddOnAction(ActionEvent event) {
-
         Customer customer = new Customer(
                 txtCustomerId.getText(),
                 cmbTitle.getValue(),
@@ -122,10 +121,7 @@ public class CustomerFormController implements Initializable {
                 txtProvince.getText(),
                 txtPostalCode.getText()
         );
-
-
         service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
-
 
         if (service.addCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION,"Customer Added ! ").show();
@@ -138,7 +134,8 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        if (customerController.deleteCustomer(txtCustomerId.getText())){
+        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+        if (service.deleteCustomer(txtCustomerId.getText())){
             new Alert(Alert.AlertType.INFORMATION,""+txtCustomerId.getText()+": Customer Deleted !!").show();
             loadTable();
         }else {

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import dto.Customer;
 import org.modelmapper.ModelMapper;
 import repository.DaoFactory;
+import repository.SuperDao;
 import repository.custom.CustomerDao;
 import service.custom.CustomerService;
 import util.DaoType;
@@ -30,7 +31,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean deleteCustomer(String id) {
-        return false;
+        System.out.println("Service delete"+id);
+        CustomerDao dao = DaoFactory.getInstance().getDaoType(DaoType.CUSTOMER);
+        return dao.delete(id);
     }
 
     @Override
