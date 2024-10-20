@@ -14,7 +14,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import dto.Customer;
 import service.ServiceFactory;
-import service.SuperService;
 import util.ServiceType;
 
 import java.net.URL;
@@ -79,7 +78,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
-    CustomerService customerController = new CustomerController();
+    CustomerService1 customerController = new CustomerController();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -144,13 +143,9 @@ public class CustomerFormController implements Initializable {
     }
 
     @FXML
-    void btnReloadOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void btnSearchOnAction(ActionEvent event) {
-        setValueToText(customerController.searchCustomer(txtCustomerId.getText()));
+        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+        setValueToText(service.searchCustomer(txtCustomerId.getText()));
     }
 
     @FXML

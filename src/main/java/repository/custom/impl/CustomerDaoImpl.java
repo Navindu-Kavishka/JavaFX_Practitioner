@@ -1,5 +1,6 @@
 package repository.custom.impl;
 
+import dto.Customer;
 import entity.CustomerEntity;
 import repository.DaoFactory;
 import repository.SuperDao;
@@ -7,14 +8,13 @@ import repository.custom.CustomerDao;
 import util.CrudUtil;
 import util.DaoType;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class CustomerDaoImpl implements CustomerDao {
     @Override
     public boolean save(CustomerEntity customer) {
-        System.out.println("Repository : "+customer);
-
         String SQL = "INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)";
         try {
             return CrudUtil.execute(
@@ -31,7 +31,6 @@ public class CustomerDaoImpl implements CustomerDao {
             );
         } catch (SQLException e) {
             System.out.println("SQL Error : "+e);
-
         }
         return false;
     }
@@ -43,7 +42,6 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public boolean delete(String id) {
-        System.out.println("repo customer delete"+ id);
         String SQL = "DELETE FROM customer WHERE CustID=?";
         try {
             return CrudUtil.execute(SQL,id);
@@ -55,5 +53,26 @@ public class CustomerDaoImpl implements CustomerDao {
     @Override
     public List<CustomerEntity> findAll() {
         return null;
+    }
+
+    public Customer search(String id) {
+        String SQL = "SELECT * FROM customer WHERE CustID=?";
+        try {
+            ResultSet resultSet = CrudUtil.execute(SQL,id);
+            resultSet.next();
+            return new Customer(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDate(4).toLocalDate(),
+                    resultSet.getDouble(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getString(9)
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

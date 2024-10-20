@@ -1,5 +1,6 @@
 package repository.custom.impl;
 
+import dto.Item;
 import entity.ItemEntity;
 import repository.custom.ItemDao;
 import util.CrudUtil;
@@ -39,6 +40,11 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<ItemEntity> findAll() {
+        return null;
+    }
+
+    @Override
+    public Item search(String id) {
         return null;
     }
 }

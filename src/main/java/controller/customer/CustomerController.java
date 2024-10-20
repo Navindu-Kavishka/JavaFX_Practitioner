@@ -8,7 +8,7 @@ import util.CrudUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CustomerController implements CustomerService {
+public class CustomerController implements CustomerService1 {
 
     @Override
     public boolean addCustomer(Customer customer) {
