@@ -36,8 +36,25 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public boolean update(CustomerEntity entity, String s) {
-        return false;
+    public boolean update(CustomerEntity customer) {
+        String SQl = "Update customer SET CustName=?, CustTitle=?, DOB=?,  salary=?,  CustAddress=?, City=?, Province=?, PostalCode=? WHERE CustID=?";
+
+        try {
+            return CrudUtil.execute(
+                    SQl,
+                    customer.getName(),
+                    customer.getTitle(),
+                    customer.getDob(),
+                    customer.getSalary(),
+                    customer.getAddress(),
+                    customer.getCity(),
+                    customer.getProvince(),
+                    customer.getPostalCode(),
+                    customer.getId()
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

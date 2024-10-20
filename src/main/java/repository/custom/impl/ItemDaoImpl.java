@@ -29,7 +29,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public boolean update(ItemEntity entity, String s) {
+    public boolean update(ItemEntity entity) {
         return false;
     }
 

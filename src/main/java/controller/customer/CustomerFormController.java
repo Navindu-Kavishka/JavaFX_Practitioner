@@ -163,7 +163,9 @@ public class CustomerFormController implements Initializable {
                 txtPostalCode.getText()
         );
 
-        if (customerController.updateCustomer(customer)){
+        service.custom.CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+
+        if (service.updateCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION,"Customer Updated!").show();
             loadTable();
         }

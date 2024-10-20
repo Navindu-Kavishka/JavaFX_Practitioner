@@ -21,7 +21,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean updateCustomer(Customer customer) {
-        return false;
+        CustomerDao dao = DaoFactory.getInstance().getDaoType(DaoType.CUSTOMER);
+        return dao.update((new ModelMapper().map(customer, CustomerEntity.class)));
     }
 
     @Override
